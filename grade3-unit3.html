@@ -915,9 +915,6 @@ const txtPic = (s, col='#16305A', extra='') => { const f = s.length>16 ? 12 : s.
   return `<svg viewBox="0 0 140 60"><rect x="3" y="8" width="134" height="44" rx="8" fill="#fff" stroke="${col}" stroke-width="3"/><text x="70" y="${30+f/3}" font-family="Calibri,Segoe UI,Arial" font-size="${f}" font-weight="700" text-anchor="middle" fill="${col}" ${extra}>${s}</text></svg>`; };
 /* styled word: plain text in a white card */
 const sty = (inner, extra='') => `<svg viewBox="0 0 140 60"><rect x="3" y="8" width="134" height="44" rx="8" fill="#fff" stroke="#9fb0c8" stroke-width="2"/><text x="70" y="39" font-family="Calibri,Segoe UI,Arial" font-size="24" text-anchor="middle" fill="#16305A" ${extra}>${inner}</text></svg>`;
-const keyPic = k => { const parts=k.split('+').map(x=>x.trim()); let x=4; const w=parts.map(p=>Math.max(30, p.length*10+16)); const tot=w.reduce((a,b)=>a+b,0)+(parts.length-1)*16; const sc=Math.min(1,132/tot);
-  let out=''; parts.forEach((p,i)=>{ if(i){ out+=`<text x="${x+8}" y="37" font-size="18" font-weight="800" text-anchor="middle" fill="#5A7397">+</text>`; x+=16; } out+=`<rect x="${x}" y="12" width="${w[i]}" height="36" rx="7" fill="#fff" stroke="#9fb0c8" stroke-width="3"/><text x="${x+w[i]/2}" y="36" font-size="16" font-weight="800" text-anchor="middle" fill="#16305A">${p}</text>`; x+=w[i]; });
-  return `<svg viewBox="0 0 140 60"><g transform="translate(${(140-tot*sc)/2-4*sc} ${30-30*sc}) scale(${sc})">${out}</g></svg>`; };
 const big = s => s.replace('viewBox="0 0 20 20"','viewBox="0 0 20 20" width="60" height="60"');
 const ico = k => big(WI[k]);
 /* four lines of text in a page, aligned */
@@ -955,8 +952,8 @@ const U = {
       {type:'map', title:'The Font group', voice:'Font Name, Font Size, Increase Font Size, Decrease Font Size, Bold, Italics, Underline, Strikethrough, Subscript, Superscript, Font Color and the Font dialog box launcher. Tap each one.', ar:'خيارات مجموعة الخط — اضغط على كل خيار', src:'page 44',
         center:{pic:txtPic('Font','#2b579a'), label:'Font group', ar:'مجموعة الخط', say:'The Font group of the Home tab.'},
         nodes:FONTPARTS.map(k=>({pic:k==='fontname'?txtPic('Calibri ▾'):k==='fontsize'?txtPic('11 ▾'):WI[k], label:PARTS[k][0], ar:PARTS[k][1], say:PARTS[k][0]}))},
-      {type:'flow', title:'Two ways to format text', voice:'One. Select options in the Font group of the Home tab. Two. Click the Font dialog box launcher in the Font group to open the Font dialog box. The quick key is Control D.', ar:'طريقتان: مجموعة الخط، أو مربع حوار الخط (Ctrl + D)', src:'pages 44–45',
-        steps:[['Home tab',txtPic('Home','#2b579a')],['Font group options',ico('bold')],['or the Font dialog box launcher',ico('launcher')],['Font dialog box (Ctrl + D)',keyPic('Ctrl + D')]]}
+      {type:'flow', title:'Two ways to format text', voice:'One. Select options in the Font group of the Home tab. Two. Click the Font dialog box launcher in the Font group to open the Font dialog box. The Font dialog box opens.', ar:'طريقتان: مجموعة الخط، أو مربع حوار الخط', src:'pages 44–45',
+        steps:[['Home tab',txtPic('Home','#2b579a')],['Font group options',ico('bold')],['or the Font dialog box launcher',ico('launcher')],['The Font dialog box opens',txtPic('Font','#2b579a')]]}
     ]},
     {title:'Font name and size', ar:'اسم الخط وحجمه', pages:[45,46,47], color:'c-green', ico:ico('grow'), games:['m-font','m-grow','sizeq'], blocks:[
       {type:'duo', title:'Font name', voice:'A font is a set of letters and symbols in a particular design and size. Each font has a name. Certain fonts such as Wingdings contain pictures called dingbats.', ar:'الخط مجموعة حروف ورموز بتصميم معيّن، ولكل خط اسم', src:'page 45', cards:[
@@ -968,10 +965,8 @@ const U = {
         {pic:sty('72','font-weight="800" font-size="30"'), label:'72 points', lines:['There are **72** points.'], c:'#F2562B'}]},
       {type:'img', title:'Examples of font sizes', img:'g3_sizes', voice:'This is font size 8, 12, 18, 24 and 32.', src:'page 46'},
       {type:'duo', title:'Bigger or smaller by one point', voice:'Select a portion of the text. Increase Font Size makes it bigger by a point. Decrease Font Size makes it smaller.', ar:'تكبير أو تصغير الخط نقطة واحدة', src:'page 46', cards:[
-        {pic:ico('grow'), label:'Increase Font Size', lines:['**bigger** by one point','Ctrl + ]'], c:'#4DB131'},
-        {pic:ico('shrink'), label:'Decrease Font Size', lines:['**smaller** by one point','Ctrl + ['], c:'#8C5BE0'}]},
-      {type:'keys', title:'Quick keys', voice:'Open the Font dialog box: Control D. Reduce the font size by one point: Control open bracket. Increase the font size by one point: Control close bracket.', src:'pages 45–46',
-        items:[['Font dialog box','Ctrl + D',WI.launcher],['Smaller by 1 point','Ctrl + [',WI.shrink],['Bigger by 1 point','Ctrl + ]',WI.grow]]}
+        {pic:ico('grow'), label:'Increase Font Size', lines:['**bigger** by one point'], c:'#4DB131'},
+        {pic:ico('shrink'), label:'Decrease Font Size', lines:['**smaller** by one point'], c:'#8C5BE0'}]}
     ]},
     {title:'Font style', ar:'نمط الخط', pages:[46,47], color:'c-red', ico:ico('bold'), games:['m-style','m-supsub','styleq'], blocks:[
       {type:'map', title:'Font styles', voice:'The way in which a character is emphasised is called its font style. The most common styles are bold, italic and underline. There are also superscript and subscript.', ar:'أنماط الخط — اضغط على كل نمط', src:'pages 46–47',
@@ -982,9 +977,7 @@ const U = {
           {pic:sty('Underline','text-decoration="underline"'), label:'Underline', chips:['a line under it'], ar:'تسطير', say:'Underlined text has a line under it. It is used to emphasise the text, and sometimes for the title of a document.'},
           {pic:sty('5<tspan font-size="14" dy="-10">th</tspan>'), label:'Superscript', chips:['raised to the top'], ar:'مرتفع', say:'Superscript reduces the size of the text and raises it to the top of the current line. In 5th, th is a superscript.'},
           {pic:sty('H<tspan font-size="14" dy="6">2</tspan><tspan dy="-6">O</tspan>'), label:'Subscript', chips:['lowered to the bottom'], ar:'منخفض', say:'Subscript reduces the size of the text and lowers it to the bottom of the current line. In H2O, the 2 is a subscript.'}]},
-      {type:'img', title:'Underline styles', img:'g3_underline', voice:'From the Underline drop-down list you can choose an underline style, the Underline Color, or More Underlines.', src:'page 47'},
-      {type:'keys', title:'Quick keys', voice:'Bold: Control B. Italics: Control I. Underline: Control U. Superscript: Control Shift equals. Subscript: Control equals.', src:'page 54',
-        items:[['Bold','Ctrl + B',WI.bold],['Italics','Ctrl + I',WI.italic],['Underline','Ctrl + U',WI.underline],['Superscript','Ctrl + Shift + =',WI.sup],['Subscript','Ctrl + =',WI.sub]]}
+      {type:'img', title:'Underline styles', img:'g3_underline', voice:'From the Underline drop-down list you can choose an underline style, the Underline Color, or More Underlines.', src:'page 47'}
     ]},
     {title:'Font color and highlighting', ar:'لون الخط والتظليل', pages:[48], color:'c-yellow', ico:ico('hl'), games:['m-color','m-hl','colorq'], blocks:[
       {type:'duo', title:'Color or highlight?', voice:'Font Color changes the color of the text to emphasise headings, subheadings and other text. Highlighting draws attention to important facts in the text.', ar:'لون الخط للعناوين، والتظليل للمعلومات المهمة', src:'page 48', cards:[
@@ -1005,7 +998,7 @@ const U = {
       {type:'img', title:'The Borders and Shading dialog box', img:'g3_bsdlg', voice:'This is the Borders and Shading dialog box. It has the Borders, Page Border and Shading tabs.', src:'page 50'},
       {type:'img', title:'Text with border and shading', img:'g3_bsresult', voice:'This text has a border and orange shading.', src:'page 50'}
     ]},
-    {title:'Text alignment', ar:'محاذاة النص', pages:[51,52], color:'c-teal', ico:ico('center'), games:['m-align','alignq','alignkeys'], blocks:[
+    {title:'Text alignment', ar:'محاذاة النص', pages:[51,52], color:'c-teal', ico:ico('center'), games:['m-align','alignq'], blocks:[
       {type:'map', title:'Four types of alignment', voice:'Text alignment refers to the text layout and the document margins. There are four types of alignment: Align Left, Center, Align Right and Justify.', ar:'أربعة أنواع للمحاذاة — اضغط على كل نوع', src:'pages 51–52',
         center:{pic:alignPic('left'), label:'Text alignment', ar:'محاذاة النص', say:'There are four types of alignment.'},
         nodes:[
@@ -1016,12 +1009,10 @@ const U = {
       {type:'flow', title:'How to align text', voice:'Select the text that you wish to align. Click the alignment button in the Paragraph group of the Home tab.', ar:'حدد النص ← اضغط زر المحاذاة في مجموعة الفقرة', src:'page 51',
         steps:[['Select the text',`<svg viewBox="0 0 140 60"><rect x="3" y="14" width="134" height="32" rx="6" fill="#9ec3ef"/><text x="70" y="37" font-size="18" font-weight="700" text-anchor="middle" fill="#16305A">My City</text></svg>`],['Home tab',txtPic('Home','#2b579a')],['Paragraph group: click a button',`<svg viewBox="0 0 140 60">${['left','center','right','justify'].map((k,i)=>`<g transform="translate(${10+i*32} 14) scale(1.5)">${WI[k].replace(/<\/?svg[^>]*>/g,'')}</g>`).join('')}</svg>`]]},
       {type:'img', title:'Different types of text alignment', img:'g3_align', voice:'This text is left aligned. This text is center aligned. This text is right aligned. And this text is justified.', src:'page 52'},
-      {type:'keys', title:'Quick keys', voice:'Left: Control L. Center: Control E. Right: Control R. Justify: Control J.', src:'page 54',
-        items:[['Align Left','Ctrl + L',WI.left],['Center','Ctrl + E',WI.center],['Align Right','Ctrl + R',WI.right],['Justify','Ctrl + J',WI.justify]]},
       {type:'duo', title:'Fact file: the mini toolbar', voice:'On selecting text, a mini toolbar appears above it, which can also be used for formatting.', src:'page 52', cards:[
         {pic:`<svg viewBox="0 0 140 70"><rect x="20" y="6" width="100" height="22" rx="3" fill="#fff" stroke="#9fb0c8" stroke-width="1.5"/><text x="34" y="22" font-size="13" font-weight="900" fill="#16305A">B</text><text x="52" y="22" font-size="13" font-style="italic" font-weight="700" fill="#16305A">I</text><text x="66" y="22" font-size="13" font-weight="700" text-decoration="underline" fill="#16305A">U</text><text x="84" y="22" font-size="13" font-weight="800" fill="#E01B1B">A</text><rect x="20" y="40" width="100" height="22" rx="3" fill="#9ec3ef"/><text x="70" y="56" font-size="13" font-weight="700" text-anchor="middle" fill="#16305A">selected text</text></svg>`, label:'Mini toolbar', lines:['appears **above** the selected text'], c:'#13A89E'}]}
     ]},
-    {title:'Bullets and numbering', ar:'التعداد النقطي والترقيم', pages:[52,53,54], color:'c-pink', ico:ico('bullets'), games:['m-list','listsort','keysm'], blocks:[
+    {title:'Bullets and numbering', ar:'التعداد النقطي والترقيم', pages:[52,53,54], color:'c-pink', ico:ico('bullets'), games:['m-list','listsort'], blocks:[
       {type:'duo', title:'Bullets or numbers?', voice:'Bullets and numbered lists present information in the form of points. To display an unordered list, bullets are used. If the order is important, the number list is used. By default MS Word 2010 uses a simple black dot as a bullet.', ar:'النقاط لقائمة بلا ترتيب، والأرقام عندما يكون الترتيب مهماً', src:'pages 52–53', cards:[
         {pic:listPic('bul'), label:'Bullets', lines:['an **unordered** list','default: a black dot •'], c:'#E8559A'},
         {pic:listPic('num'), label:'Numbering', lines:['an **ordered** list','when the order is important'], c:'#F2562B'}]},
@@ -1029,11 +1020,9 @@ const U = {
         steps:[['Type 1. or *',txtPic('1.   *')],['Press Space Bar or Tab',txtPic('Space / Tab','#2b579a')],['Type the text',txtPic('Pencil')],['Press Enter for the next one',txtPic('Enter ↵','#13A89E')]]},
       {type:'flow', title:'A list for existing text', voice:'Select the text. Choose a style from the Bullets drop-down list, or the Numbering drop-down list, in the Paragraph group of the Home tab.', ar:'حدد النص ← اختر من قائمة التعداد النقطي أو الترقيم', src:'page 53',
         steps:[['Select the text',`<svg viewBox="0 0 140 60"><rect x="3" y="8" width="134" height="44" rx="6" fill="#9ec3ef"/><text x="70" y="26" font-size="14" font-weight="700" text-anchor="middle" fill="#16305A">Pencil</text><text x="70" y="44" font-size="14" font-weight="700" text-anchor="middle" fill="#16305A">Eraser</text></svg>`],['Bullets ▾',ico('bullets')],['or Numbering ▾',ico('numbering')]]},
-      {type:'img', title:'Bullets and numbering drop-down lists', img:'g3_lists', voice:'This is a numbered list, and this is a bulleted list.', src:'page 53'},
-      {type:'keys', title:'All the quick keys', voice:'Bold Control B. Italics Control I. Underline Control U. Superscript Control Shift equals. Subscript Control equals. Clear formatting Control Space bar. Left Control L. Right Control R. Center Control E. Justify Control J.', src:'page 54',
-        items:[['Bold','Ctrl + B',WI.bold],['Italics','Ctrl + I',WI.italic],['Underline','Ctrl + U',WI.underline],['Superscript','Ctrl + Shift + =',WI.sup],['Subscript','Ctrl + =',WI.sub],['Clear formatting','Ctrl + Space bar',''],['Align Left','Ctrl + L',WI.left],['Align Right','Ctrl + R',WI.right],['Center','Ctrl + E',WI.center],['Justify','Ctrl + J',WI.justify]]}
+      {type:'img', title:'Bullets and numbering drop-down lists', img:'g3_lists', voice:'This is a numbered list, and this is a bulleted list.', src:'page 53'}
     ]},
-    {title:'Exercise', ar:'التمارين', pages:[54,55,56,57,58], color:'c-ink', ico:sq('?','#F2562B',16), games:['gloss','mary','exA','exB','exC','exD','exE'], blocks:[
+    {title:'Exercise', ar:'التمارين', pages:[54,55,56,57,58], color:'c-ink', ico:sq('?','#F2562B',16), games:['gloss','mary','exA','exB','exD','exE'], blocks:[
       {type:'map', title:'Glossary', voice:'Bold, Font name, Font size, Font style, Formatting text, Italic text, Superscript, Subscript, Text alignment and Underline text. Tap each word to hear what it means.', ar:'كلمات جديدة — اضغط على كل كلمة', src:'page 55',
         center:{pic:sty('Aa','font-weight="800" fill="#E8559A"'), label:'New words', ar:'كلمات جديدة'}, nodes:[
         {pic:WI.bold, label:'Bold', chips:['darker text'], say:'Bold. Darker printed text so that words and phrases stand out on a page.'},
@@ -1056,16 +1045,15 @@ const U = {
       {q:'What is the <b>default font</b> in MS Word 2010?', ar:'ما هو الخط الافتراضي؟', choices:[['Calibri',sty('Calibri'),1],['Arial Black',sty('Arial Black','font-family="Arial Black" font-size="18"')],['Comic Sans MS',sty('Comic Sans','font-family="Comic Sans MS"')]], why:'The default font in MS Word 2010 is Calibri.'},
       {q:'What is the <b>default font size</b>?', ar:'ما هو حجم الخط الافتراضي؟', choices:[['11',sty('11','font-weight="700"'),1],['72',sty('72','font-weight="700"')],['18',sty('18','font-weight="700"')]], why:'The default font size is 11 points.'},
       {q:'Which group of the Home tab has the font options?', ar:'أي مجموعة فيها خيارات الخط؟', choices:[['Font group',txtPic('Font','#2b579a'),1],['Clipboard group',txtPic('Clipboard','#2b579a')],['Editing group',txtPic('Editing','#2b579a')]], why:'Formatting can be done with the options in the Font group of the Home tab.'},
-      {q:'Which button opens the <b>Font dialog box</b>?', ar:'أي زر يفتح مربع حوار الخط؟', choices:[['Font dialog box launcher',ico('launcher'),1],['Bold',ico('bold')],['Font Color',ico('color')]], why:'Click the Font dialog box launcher in the Font group, or press Ctrl + D.'},
+      {q:'Which button opens the <b>Font dialog box</b>?', ar:'أي زر يفتح مربع حوار الخط؟', choices:[['Font dialog box launcher',ico('launcher'),1],['Bold',ico('bold')],['Font Color',ico('color')]], why:'Click the Font dialog box launcher in the Font group.'},
       {q:'Formatting changes the <b>___</b> of the text.', ar:'التنسيق يغيّر ___ النص', choices:[['appearance (look)',sty('Look!','font-weight="700" fill="#E8559A"'),1],['spelling',sty('speling')]], why:'Formatting helps in changing the appearance of the text.'}]},
     'm-font':mis('font','Font name and size','Comic Sans MS, size 18',sq('Aa','#4DB131',12),'c-green',[45,46,47]),
     'm-grow':mis('grow','Bigger and smaller','Increase and Decrease',ico('grow'),'c-blue',[46]),
     sizeq:{t:'Size quiz', s:'Points and fonts', ico:sq('72','#E39B00',11), c:'c-yellow', pages:[45,46], go:gameQuiz, rounds:[
       {q:'Font size is measured in…', ar:'يقاس حجم الخط بـ…', choices:[['points',sty('pt','font-weight="700"'),1],['meters',sty('m','font-weight="700"')],['pages',sty('pages')]], why:'The font size is measured in points.'},
       {q:'How many points are there?', ar:'كم عدد النقاط؟', choices:[['72',sty('72','font-weight="800"'),1],['11',sty('11','font-weight="800"')],['100',sty('100','font-weight="800"')]], why:'There are 72 points.'},
-      {q:'Which button makes the text <b>bigger</b> by one point?', ar:'أي زر يكبّر الخط نقطة؟', choices:[['Increase Font Size',ico('grow'),1],['Decrease Font Size',ico('shrink')]], why:'Increase Font Size makes the text bigger by a point. The quick key is Ctrl + ].'},
-      {q:'Which font has pictures called <b>dingbats</b>?', ar:'أي خط فيه صور؟', choices:[['Wingdings',sty('✈ ☺ ✂'),1],['Calibri',sty('Calibri')],['Times New Roman',sty('Times','font-family="Times New Roman"')]], why:'Certain fonts such as Wingdings contain pictures called dingbats.'},
-      {q:'Which quick key opens the <b>Font dialog box</b>?', ar:'أي اختصار يفتح مربع حوار الخط؟', choices:[['Ctrl + D',keyPic('Ctrl + D'),1],['Ctrl + B',keyPic('Ctrl + B')],['Ctrl + J',keyPic('Ctrl + J')]], why:'Ctrl + D opens the Font dialog box.'}]},
+      {q:'Which button makes the text <b>bigger</b> by one point?', ar:'أي زر يكبّر الخط نقطة؟', choices:[['Increase Font Size',ico('grow'),1],['Decrease Font Size',ico('shrink')]], why:'Increase Font Size makes the text bigger by a point.'},
+      {q:'Which font has pictures called <b>dingbats</b>?', ar:'أي خط فيه صور؟', choices:[['Wingdings',sty('✈ ☺ ✂'),1],['Calibri',sty('Calibri')],['Times New Roman',sty('Times','font-family="Times New Roman"')]], why:'Certain fonts such as Wingdings contain pictures called dingbats.'}]},
     'm-style':mis('style','Bold, Italic, Underline','B  I  U in Word',ico('bold'),'c-red',[46]),
     'm-supsub':mis('supsub','Up and down','5th and H2O',ico('sup'),'c-purple',[47]),
     styleq:{t:'Which style?', s:'Look at the word', ico:ico('italic'), c:'c-pink', pages:[46,47], go:gameQuiz, rounds:[
@@ -1097,9 +1085,6 @@ const U = {
       {q:'Which alignment is this?', pic:alignPic('center'), ar:'ما نوع المحاذاة؟', choices:[['Center',ico('center'),1],['Justify',ico('justify')],['Align Left',ico('left')]], why:'Center aligns the text centrally and leaves it ragged at both edges.'},
       {q:'Which alignment is this?', pic:alignPic('justify'), ar:'ما نوع المحاذاة؟', choices:[['Justify',ico('justify'),1],['Center',ico('center')],['Align Right',ico('right')]], why:'Justify aligns the text to both the right and the left margins.'},
       {q:'Which alignment is the <b>default</b>?', ar:'ما المحاذاة الافتراضية؟', choices:[['Align Left',ico('left'),1],['Center',ico('center')],['Justify',ico('justify')]], why:'Align Left is the default alignment.'}]},
-    alignkeys:{t:'Alignment keys', s:'Match the quick keys', ico:sq('Ctrl','#16305A',7), c:'c-ink', pages:[54], go:gameMatch, q:'Match each alignment with its quick key.', ar:'صل كل محاذاة باختصارها',
-      pairs:[[{pic:ico('left'),label:'Align Left'},{pic:keyPic('Ctrl + L')}],[{pic:ico('center'),label:'Center'},{pic:keyPic('Ctrl + E')}],[{pic:ico('right'),label:'Align Right'},{pic:keyPic('Ctrl + R')}],[{pic:ico('justify'),label:'Justify'},{pic:keyPic('Ctrl + J')}]],
-      say:k=>['Align Left, Control L','Center, Control E','Align Right, Control R','Justify, Control J'][k]},
     'm-list':mis('list','Bullets and numbering','Make two lists in Word',ico('bullets'),'c-pink',[52,53]),
     listsort:{t:'Bullets or numbers?', s:'Is the order important?', ico:ico('numbering'), c:'c-yellow', pages:[52,53,58], go:gameSort,
       q:'Is the order important? Tap <b style="color:#F2562B">Numbering</b>. If not, tap <b style="color:#E8559A">Bullets</b>.', ar:'هل الترتيب مهم؟ اختر الترقيم، وإلا فالتعداد النقطي',
@@ -1107,9 +1092,6 @@ const U = {
       items:[['Steps for making lemonade',txtPic('🍋 1 2 3','#16305A'),1,'Steps must be in order, so use numbering.'],['Countries and their capitals',txtPic('🌍','#16305A'),0,'An unordered list uses bullets.'],
         ['Steps to create a bulleted list',txtPic('Step 1, 2, 3','#16305A'),1,'Steps must be in order, so use numbering.'],['Subjects and their teachers',txtPic('📚','#16305A'),0,'An unordered list uses bullets.'],
         ['Things in my school bag',txtPic('✏️ 📏','#16305A'),0,'The order is not important, so use bullets.'],['Steps to apply a border',txtPic('1 ➜ 2 ➜ 3','#16305A'),1,'Steps must be in order, so use numbering.']]},
-    keysm:{t:'Quick keys', s:'Match the font keys', ico:sq('Ctrl','#1C83E0',7), c:'c-blue', pages:[54], go:gameMatch, q:'Match each button with its quick key.', ar:'صل كل زر باختصاره',
-      pairs:[[{pic:ico('bold'),label:'Bold'},{pic:keyPic('Ctrl + B')}],[{pic:ico('italic'),label:'Italics'},{pic:keyPic('Ctrl + I')}],[{pic:ico('underline'),label:'Underline'},{pic:keyPic('Ctrl + U')}],[{pic:ico('sub'),label:'Subscript'},{pic:keyPic('Ctrl + =')}],[{pic:ico('launcher'),label:'Font dialog box'},{pic:keyPic('Ctrl + D')}]],
-      say:k=>['Bold, Control B','Italics, Control I','Underline, Control U','Subscript, Control equals','Font dialog box, Control D'][k]},
     gloss:{t:'Glossary quiz', s:'Which word is it?', ico:ico('italic'), c:'c-teal', pages:[55], go:gameQuiz, rounds:[
       {q:'<b>Slanted</b> text used for emphasis.', ar:'نص مائل للتأكيد', choices:[['Italic text',ico('italic'),1],['Bold',ico('bold')],['Underline text',ico('underline')]], why:'Italic text: slanted text used for emphasis.'},
       {q:'The <b>design or style</b> of characters.', ar:'تصميم الحروف', choices:[['Font name',txtPic('Calibri ▾'),1],['Font size',txtPic('11 ▾')]], why:'Font name: the design or style of characters.'},
@@ -1135,9 +1117,6 @@ const U = {
     exB:{t:'Exercise B', s:'Match the font styles', ico:sq('<tspan font-style="italic">F</tspan>','#E8559A',14), c:'c-pink', pages:[56], go:gameMatch, q:'Match each word with its font style.', ar:'صل كل كلمة بنمط الخط',
       pairs:[[{pic:sty('FONT','font-style="italic"')},{label:'Italic text'}],[{pic:sty('FONT','font-weight="900"')},{label:'Bold'}],[{pic:sty('FO<tspan font-size="14" dy="6">NT</tspan>')},{label:'Subscript'}],[{pic:sty('FONT','text-decoration="underline"')},{label:'Underline text'}],[{pic:sty('FO<tspan font-size="14" dy="-10">NT</tspan>')},{label:'Superscript'}]],
       say:k=>['Italic text','Bold','Subscript','Underline text','Superscript'][k]},
-    exC:{t:'Exercise C', s:'Shortcut keys', ico:sq('Ctrl','#F2562B',7), c:'c-red', pages:[56], go:gameMatch, q:'Match each job with its shortcut key.', ar:'صل كل عمل باختصاره',
-      pairs:[[{pic:ico('underline'),label:'Underline the text'},{pic:keyPic('Ctrl + U')}],[{pic:ico('right'),label:'Right align a paragraph'},{pic:keyPic('Ctrl + R')}],[{pic:sty('Aa'),label:'Clear formatting'},{pic:keyPic('Ctrl + Space bar')}],[{pic:ico('sup'),label:'Apply Superscript'},{pic:keyPic('Ctrl + Shift + =')}],[{pic:ico('justify'),label:'Justify text'},{pic:keyPic('Ctrl + J')}]],
-      say:k=>['Underline, Control U','Right align, Control R','Clear formatting, Control Space bar','Superscript, Control Shift equals','Justify, Control J'][k]},
     exD:{t:'Exercise D', s:'Name the options', ico:ico('launcher'), c:'c-purple', pages:[57], go:gameLabel, parts:['fontname','fontsize','grow','shrink','bold','italic','underline','strike','sub','sup','hl','color','left','center'],
       q:'Name the options! Drag each name to its number, or tap a name then tap the number.', ar:'اسحب كل اسم إلى رقمه'},
     exE:{t:'Exercise E', s:'Answer by tapping', ico:sq('?','#13A89E',16), c:'c-teal', pages:[57], go:gameQuiz, shuffle:false, rounds:[

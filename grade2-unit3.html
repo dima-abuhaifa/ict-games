@@ -839,7 +839,6 @@ function gameLabel(id, G){
    Every fact below comes from the book pages. */
 const txtPic = (s, col='#16305A') => { const f = s.length>14 ? 13 : s.length>9 ? 16 : 20;
   return `<svg viewBox="0 0 140 60"><rect x="3" y="8" width="134" height="44" rx="8" fill="#fff" stroke="${col}" stroke-width="3"/><text x="70" y="${30+f/3}" font-family="Calibri,Segoe UI,Arial" font-size="${f}" font-weight="700" text-anchor="middle" fill="${col}">${s}</text></svg>`; };
-const keyPic = k => `<svg viewBox="0 0 120 60"><rect x="4" y="10" width="54" height="40" rx="8" fill="#fff" stroke="#9fb0c8" stroke-width="3"/><text x="31" y="37" font-size="17" font-weight="800" text-anchor="middle" fill="#16305A">Ctrl</text><text x="64" y="37" font-size="20" font-weight="800" fill="#5A7397">+</text><rect x="76" y="10" width="40" height="40" rx="8" fill="#fff" stroke="#9fb0c8" stroke-width="3"/><text x="96" y="38" font-size="22" font-weight="800" text-anchor="middle" fill="#16305A">${k}</text></svg>`;
 const big = s => s.replace('viewBox="0 0 20 20"','viewBox="0 0 20 20" width="60" height="60"');
 const PP = k => partPic(k);
 const mis = (m, t, s, ico, c, pages) => ({t, s, ico, c, pages, m, go:(id,G)=>startMission(G.m,id)});
@@ -869,22 +868,19 @@ const U = {
         {pic:big(WI.cut), label:'Cut', lines:['**moves** the text','The text is **removed**.'], c:'#F2562B'},
         {pic:big(WI.copy), label:'Copy', lines:['**copies** the text','The text is **NOT removed**.'], c:'#1C83E0'}]},
       {type:'flow', title:'Cut (or Copy) and Paste', voice:'Select the text. Click the Home tab. Click Cut or Copy in the Clipboard group. Click where the text should go. Click Paste.', ar:'حدد النص ← الصفحة الرئيسية ← قص أو نسخ ← اضغط المكان ← لصق', src:'pages 29–30',
-        steps:[['Select the text',`<svg viewBox="0 0 140 60"><rect x="3" y="14" width="134" height="32" rx="6" fill="#9ec3ef"/><text x="70" y="37" font-size="18" font-weight="700" text-anchor="middle" fill="#16305A">Today</text></svg>`],['Home tab',txtPic('Home','#2b579a')],['Cut or Copy',big(WI.cut)],['Click the new place',PP('cursor')],['Paste',WI.paste]]},
-      {type:'keys', title:'Quick keys', voice:'Cut is Control X. Copy is Control C. Paste is Control V.', src:'page 30', items:[['Cut','Ctrl + X',WI.cut],['Copy','Ctrl + C',WI.copy],['Paste','Ctrl + V',WI.paste]]}
+        steps:[['Select the text',`<svg viewBox="0 0 140 60"><rect x="3" y="14" width="134" height="32" rx="6" fill="#9ec3ef"/><text x="70" y="37" font-size="18" font-weight="700" text-anchor="middle" fill="#16305A">Today</text></svg>`],['Home tab',txtPic('Home','#2b579a')],['Cut or Copy',big(WI.cut)],['Click the new place',PP('cursor')],['Paste',WI.paste]]}
     ]},
-    {title:'Undo and Redo', ar:'تراجع وإعادة', pages:[30], color:'c-purple', ico:big(WI.undo), games:['m-undo','keys'], blocks:[
+    {title:'Undo and Redo', ar:'تراجع وإعادة', pages:[30], color:'c-purple', ico:big(WI.undo), games:['m-undo'], blocks:[
       {type:'duo', title:'On the Quick Access Toolbar', voice:'Click the Undo button on the Quick Access Toolbar to reverse the last action. Click the Redo button to repeat the last action.', ar:'تراجع يلغي آخر عمل، وإعادة يكرره', src:'page 30', cards:[
         {pic:big(WI.undo), label:'Undo', lines:['goes **back**','reverses the last action'], c:'#8C5BE0'},
-        {pic:big(WI.redo), label:'Redo', lines:['does it **again**','repeats the last action'], c:'#13A89E'}]},
-      {type:'keys', title:'Quick keys', voice:'Undo is Control Z. Redo is Control Y.', src:'page 30', items:[['Undo','Ctrl + Z',WI.undo],['Redo','Ctrl + Y',WI.redo]]}
+        {pic:big(WI.redo), label:'Redo', lines:['does it **again**','repeats the last action'], c:'#13A89E'}]}
     ]},
     {title:'Find and Replace', ar:'البحث والاستبدال', pages:[31,32], color:'c-teal', ico:big(WI.find), games:['m-find','m-replace'], blocks:[
       {type:'flow', title:'Find a word', voice:'Click Find in the Editing group of the Home tab. The Find and Replace box opens. Type the word in Find what. Click Find Next.', ar:'بحث ← اكتب الكلمة ← البحث عن التالي', src:'page 31',
         steps:[['Home tab',txtPic('Home','#2b579a')],['Find (Editing group)',big(WI.find)],['Find what: type the word',txtPic('read')],['Find Next',txtPic('Find Next','#13A89E')]]},
       {type:'img', title:'The Find and Replace dialog box', img:'g2_find', voice:'This is the Find and Replace dialog box.', src:'page 31'},
       {type:'flow', title:'Replace a word', voice:'Click Replace in the Editing group. Type the word in Find what. Type the new word in Replace with. Click Replace or Replace All. Word tells you how many replacements were made. Click OK.', ar:'استبدال ← ابحث عن ← استبدل بـ ← استبدال الكل ← موافق', src:'page 32',
-        steps:[['Replace',big(WI.repl)],['Find what',txtPic('cat')],['Replace with',txtPic('dog','#F2562B')],['Replace All',txtPic('Replace All','#13A89E')],['OK',txtPic('OK','#4DB131')]]},
-      {type:'keys', title:'Quick keys', voice:'Find is Control F. Replace is Control H.', src:'page 32', items:[['Find','Ctrl + F',WI.find],['Replace','Ctrl + H',WI.repl]]}
+        steps:[['Replace',big(WI.repl)],['Find what',txtPic('cat')],['Replace with',txtPic('dog','#F2562B')],['Replace All',txtPic('Replace All','#13A89E')],['OK',txtPic('OK','#4DB131')]]}
     ]},
     {title:'Spelling & Grammar', ar:'التدقيق الإملائي والنحوي', pages:[32,33], color:'c-pink', ico:WI.spell, games:['m-spell','m-review','spellq'], blocks:[
       {type:'duo', title:'Spelling mistakes', voice:'Spelling mistakes are underlined with a red wavy line. MS Word can correct common typing errors automatically, like teh to the.', ar:'الخطأ الإملائي يظهر بخط أحمر متموج', src:'pages 32–33', cards:[
@@ -921,8 +917,6 @@ const U = {
         {pic:big(WI.undo), label:'Undo', chips:['reverses the last action'], say:'Undo. The option that reverses the last action performed.'}]},
       {type:'recap', title:'You are here!', voice:'The main parts of the Word window are the Title bar, Quick Access Toolbar, Ruler, Scroll bars, Work Area, Ribbon and Status bar. Select text to move it or copy it. Cut and Copy put the text on the Clipboard, and Paste places it. Find locates words and Replace changes them. The Spellchecker corrects spellings. Change Case is in the Font group of the Home tab.', src:'page 36', items:[
         ['Main parts of the Word window',PP('none')],['Select text to move or copy it',`<svg viewBox="0 0 140 60"><rect x="3" y="14" width="134" height="32" rx="6" fill="#9ec3ef"/><text x="70" y="37" font-size="18" font-weight="700" text-anchor="middle" fill="#16305A">Today</text></svg>`],['Cut or Copy, then Paste',WI.paste],['Find and Replace words',big(WI.find)],['Spellchecker fixes spellings',WI.spell],['Home ➜ Font group ➜ Change Case',WI.aa]]},
-      {type:'keys', title:'All the quick keys', voice:'Cut Control X. Copy Control C. Paste Control V. Undo Control Z. Redo Control Y. Find Control F. Replace Control H.', src:'pages 30 and 32',
-        items:[['Cut','Ctrl + X',WI.cut],['Copy','Ctrl + C',WI.copy],['Paste','Ctrl + V',WI.paste],['Undo','Ctrl + Z',WI.undo],['Redo','Ctrl + Y',WI.redo],['Find','Ctrl + F',WI.find],['Replace','Ctrl + H',WI.repl]]},
       {type:'map', title:'Remember the parts', voice:'Quick Access Toolbar, Title bar, Ribbon, Ruler, Work Area, Status bar.', src:'pages 27–28',
         center:{pic:PP('none'), label:'Word window'}, nodes:['qat','title','ribbon','ruler','work','status'].map(k=>({pic:PP(k), label:PARTS[k][0], say:PARTS[k][0]+'. '+PARTS[k][2]}))}
     ]}
@@ -944,9 +938,6 @@ const U = {
       {q:'After Cut or Copy, what do you click?', ar:'بعد القص أو النسخ ماذا تضغط؟', choices:[['Paste',WI.paste,1],['Find',big(WI.find)],['Undo',big(WI.undo)]], why:'Paste places the text where you want it.'},
       {q:'Where are Cut, Copy and Paste?', ar:'أين القص والنسخ واللصق؟', choices:[['Clipboard group',txtPic('Clipboard','#2b579a'),1],['Editing group',txtPic('Editing','#2b579a')]], why:'Cut, Copy and Paste are in the Clipboard group of the Home tab.'}]},
     'm-undo':mis('undo','Undo and Redo','Go back, do it again',big(WI.undo),'c-purple',[30]),
-    keys:{t:'Quick keys', s:'Match the keys', ico:keyPic('Z'), c:'c-ink', pages:[30], go:gameMatch, q:'Match each button with its quick key.', ar:'صل كل زر باختصاره',
-      pairs:[[{pic:big(WI.cut),label:'Cut'},{pic:keyPic('X')}],[{pic:big(WI.copy),label:'Copy'},{pic:keyPic('C')}],[{pic:WI.paste,label:'Paste'},{pic:keyPic('V')}],[{pic:big(WI.undo),label:'Undo'},{pic:keyPic('Z')}],[{pic:big(WI.redo),label:'Redo'},{pic:keyPic('Y')}]],
-      say:k=>['Cut, Control X','Copy, Control C','Paste, Control V','Undo, Control Z','Redo, Control Y'][k]},
     'm-find':mis('find','Find a word','Find and Find Next',big(WI.find),'c-teal',[31]),
     'm-replace':mis('replace','Replace a word','Change cat to dog',big(WI.repl),'c-pink',[31,32]),
     'm-spell':mis('spell','Fix the spelling','Right-click the red word',WI.spell,'c-pink',[32,33]),
